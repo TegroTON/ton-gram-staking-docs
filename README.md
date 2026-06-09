@@ -63,7 +63,7 @@ Then: build a stake/unstake/claim transaction via the API and sign it with the u
 ├── examples/        runnable TS / Python / curl integration examples
 ├── openapi.yaml     OpenAPI 3.0 spec of the staking API
 ├── llms.txt         machine-readable index for LLM tools
-├── CONTRIBUTING.md · SECURITY.md · DISCLAIMER.md · LICENSE
+├── CHANGELOG.md · CONTRIBUTING.md · SECURITY.md · DISCLAIMER.md · LICENSE
 ```
 
 ## Contributing & security

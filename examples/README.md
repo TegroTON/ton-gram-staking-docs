@@ -8,7 +8,9 @@ Copy-paste examples for integrating Tegro liquid staking. **Reads** are open; **
 | [`curl.sh`](curl.sh) | shell | Raw HTTP — read pools & pool data |
 | [`quickstart.ts`](quickstart.ts) | TypeScript | Read state, build a stake tx, hand it to TON Connect |
 | [`quickstart.py`](quickstart.py) | Python | Read pools, pool data & a user's pending withdrawals |
+| [`unstake-claim-flow.ts`](unstake-claim-flow.ts) | TypeScript | Full exit: unstake → poll the 72h voucher → claim |
 | [`onchain.ts`](onchain.ts) | TypeScript | Read the stgTON rate & solvency **directly on TON** (no API) |
+| [`solvency-monitor.ts`](solvency-monitor.ts) | TypeScript | Watch pool solvency on-chain on a loop (`get_solvency`) |
 
 - **API base:** `https://tegro.finance/api/v1`
 - **stgTON master:** `EQC-DUl20SfQFVH34cky8N76la1K0Uu5UWjel5IEn7mjIrfc`
