@@ -1,0 +1,166 @@
+openapi: 3.0.3
+info:
+  title: Tegro Staking API
+  version: "1.0"
+  description: >
+    Public API for Tegro liquid staking (stgTON) on TON. Read endpoints are open; the
+    transaction-builder endpoints (stake/unstake/claim) and the withdrawals list require an
+    authenticated session (TON Connect → session cookie). The builders return an unsigned
+    TON Connect transaction the user signs in their own wallet — the API never holds keys.
+  contact:
+    name: Tegro Finance
+    url: https://tegro.finance
+servers:
+  - url: https://tegro.finance/api/v1
+tags:
+  - name: staking
+paths:
+  /liquid-staking/pools:
+    get:
+      tags: [staking]
+      summary: List liquid staking pools
+      responses:
+        "200":
+          description: Pools
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/LiquidStakingPool" }
+  /liquid-staking/pool/{address}/data:
+    get:
+      tags: [staking]
+      summary: Live pool data (rate, APY, status)
+      parameters: [{ $ref: "#/components/parameters/PoolAddress" }]
+      responses:
+        "200":
+          description: Pool data
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/LiquidStakingPoolData" }
+  /liquid-staking/pool/{address}/stake:
+    post:
+      tags: [staking]
+      summary: Build a stake transaction (TON → stgTON)
+      security: [{ sessionCookie: [] }]
+      parameters: [{ $ref: "#/components/parameters/PoolAddress" }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                offer_amount: { type: integer, description: TON to stake, in nanotons }
+              required: [offer_amount]
+      responses:
+        "200":
+          description: Unsigned TON Connect transaction
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/TransactionData" }
+  /liquid-staking/pool/{address}/unstake:
+    post:
+      tags: [staking]
+      summary: Build an unstake transaction (burn stgTON → 72h withdrawal voucher)
+      security: [{ sessionCookie: [] }]
+      parameters: [{ $ref: "#/components/parameters/PoolAddress" }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                shares_amount: { type: integer, description: stgTON to redeem, in nano (9 decimals) }
+              required: [shares_amount]
+      responses:
+        "200":
+          description: Unsigned TON Connect transaction
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/TransactionData" }
+  /liquid-staking/pool/{address}/claim:
+    post:
+      tags: [staking]
+      summary: Build a claim transaction (matured voucher → TON)
+      description: The voucher must be owned by the authenticated account, matured (72h), and unclaimed — verified on-chain server-side.
+      security: [{ sessionCookie: [] }]
+      parameters: [{ $ref: "#/components/parameters/PoolAddress" }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                voucher_address: { type: string, description: Withdrawal voucher address (from /withdrawals) }
+              required: [voucher_address]
+      responses:
+        "200":
+          description: Unsigned TON Connect transaction
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/TransactionData" }
+  /liquid-staking/pool/{address}/withdrawals:
+    get:
+      tags: [staking]
+      summary: The authenticated account's pending withdrawal vouchers
+      security: [{ sessionCookie: [] }]
+      parameters: [{ $ref: "#/components/parameters/PoolAddress" }]
+      responses:
+        "200":
+          description: Pending withdrawals
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/Withdrawal" }
+components:
+  parameters:
+    PoolAddress:
+      name: address
+      in: path
+      required: true
+      schema: { type: string }
+      description: Staking pool (stgTON master) address, e.g. EQC-DUl20SfQFVH34cky8N76la1K0Uu5UWjel5IEn7mjIrfc
+  securitySchemes:
+    sessionCookie:
+      type: apiKey
+      in: cookie
+      name: token
+      description: Session token obtained after authenticating the wallet via TON Connect.
+  schemas:
+    LiquidStakingPool:
+      type: object
+      properties:
+        address: { type: string }
+        apy: { type: number }
+        min_offer_amount: { type: string, description: minimum stake, in nano }
+        is_active: { type: boolean }
+    LiquidStakingPoolData:
+      type: object
+      properties:
+        address: { type: string }
+        price: { type: string, description: current stgTON→TON rate (nano-scaled) }
+        is_active: { type: boolean }
+    TransactionData:
+      type: object
+      description: Unsigned transaction for TON Connect `sendTransaction`.
+      properties:
+        valid_until: { type: integer }
+        messages:
+          type: array
+          items:
+            type: object
+            properties:
+              to: { type: string }
+              amount: { type: string, description: nanotons }
+              payload: { type: string, nullable: true, description: base64 BoC }
+    Withdrawal:
+      type: object
+      properties:
+        voucher_address: { type: string }
+        amount: { type: integer, description: payout in nanotons }
+        claim_after: { type: integer, description: unix ts; claimable when now >= this }
+        claimable: { type: boolean }

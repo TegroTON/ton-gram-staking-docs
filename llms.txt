@@ -1,0 +1,35 @@
+# Tegro Staking (stgTON)
+
+> Liquid staking on The Open Network (TON) by Tegro Finance. Stake TON, receive the liquid staking
+> token stgTON (an appreciating-rate LST, like Lido/Tonstakers/bemo), earn up to ~12% APY (variable),
+> and exit via a 72-hour unbonding voucher. Non-custodial, on-chain. App: https://tegro.finance/staking
+>
+> This index is machine-readable for AI agents and LLM tools. Each page is plain Markdown.
+> For programmatic integration see the OpenAPI spec and the AI-integration guide below.
+
+## Docs
+- [How it works](docs/how-it-works.md): the liquid staking model — stake → appreciating rate → unstake (72h) → claim
+- [FAQ](docs/faq.md): APY, fees (0.5% redeem), 72h withdrawal, safety, verification
+- [Guide](docs/guide.md): step-by-step stake / unstake / claim on tegro.finance/staking
+- [Security model](docs/security.md): on-chain invariants, get_solvency, 72h queue, reviews
+- [Disclaimer & risks](DISCLAIMER.md): variable yield, smart-contract & market risk, DYOR
+
+## Contracts (TON mainnet)
+- [Contract registry](docs/contracts.md): stgTON master `EQC-DUl20SfQFVH34cky8N76la1K0Uu5UWjel5IEn7mjIrfc`, code_hash `d12d097f8e94c138768b45333c1ca1b02c07b3e5244c772c4c15961e067c0da3`
+
+## API & integration (for AI agents / developers)
+- [AI integration overview](docs/ai-integration.md): how an agent or app integrates Tegro staking
+- [API reference](docs/api.md): public read endpoints + transaction builders
+- [OpenAPI spec](openapi.yaml): machine-readable API definition (OpenAPI 3.0)
+
+## Key facts (structured)
+- network: TON mainnet
+- liquid_token: stgTON (jetton, 9 decimals)
+- stake_asset: TON
+- model: appreciating-rate liquid staking token (rate monotonic up, capped by backing)
+- target_apy: up to ~12% (variable, not guaranteed)
+- redeem_fee: 0.5% (on unstake)
+- unbonding_period: 72 hours
+- custody: non-custodial (on-chain smart contract)
+- app_url: https://tegro.finance/staking
+- api_base: https://tegro.finance/api/v1

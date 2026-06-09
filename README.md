@@ -13,10 +13,19 @@ contain smart-contract source code.
 
 - [How it works](docs/how-it-works.md) — the liquid staking model in plain language
 - [FAQ](docs/faq.md) — APY, fees, the 72-hour withdrawal, safety
+- [Guide: stake · unstake · claim](docs/guide.md) — step-by-step
 - [Contracts](docs/contracts.md) — on-chain addresses & code hashes (verify them yourself)
 - [Security model](docs/security.md) — the safety invariants of the protocol
-- [Guide: stake · unstake · claim](docs/guide.md) — step-by-step
 - [Disclaimer & risks](DISCLAIMER.md)
+
+### For developers & AI agents
+- [AI / agent integration](docs/ai-integration.md) — discover & integrate Tegro staking
+- [API reference](docs/api.md) · [OpenAPI spec](openapi.yaml) — the public staking API
+- [`llms.txt`](llms.txt) — machine-readable index for LLM tools
+
+> 🤖 **AI-friendly:** these docs follow the [TON AI-docs](https://docs.ton.org/overview/ai/overview)
+> pattern — `llms.txt` index, plain-Markdown pages, and an OpenAPI spec — so agents and LLM tools can
+> find and integrate Tegro staking easily.
 
 ## Quick facts
 
