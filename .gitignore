@@ -1,0 +1,17 @@
+# Dependencies / build output (examples are runnable but nothing here is committed built)
+node_modules/
+dist/
+.cache/
+
+# Env & secrets — never commit
+.env
+.env.*
+*.key
+*.pem
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.log
