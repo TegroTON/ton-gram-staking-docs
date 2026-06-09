@@ -9,6 +9,7 @@
 
 ## Docs
 - [How it works](docs/how-it-works.md): the liquid staking model — stake → appreciating rate → unstake (72h) → claim
+- [Architecture](docs/architecture.md): components, lifecycle & trust model (diagrams)
 - [FAQ](docs/faq.md): APY, fees (0.5% redeem), 72h withdrawal, safety, verification
 - [Guide](docs/guide.md): step-by-step stake / unstake / claim on tegro.finance/staking
 - [Security model](docs/security.md): on-chain invariants, get_solvency, 72h queue, reviews
@@ -21,6 +22,7 @@
 - [AI integration overview](docs/ai-integration.md): how an agent or app integrates Tegro staking
 - [API reference](docs/api.md): public read endpoints + transaction builders
 - [OpenAPI spec](openapi.yaml): machine-readable API definition (OpenAPI 3.0)
+- [Examples](examples/README.md): runnable TS / Python / curl / on-chain integration snippets
 
 ## Key facts (structured)
 - network: TON mainnet

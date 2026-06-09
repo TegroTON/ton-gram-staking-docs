@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security disclosure
+    url: https://t.me/TegroFinance
+    about: Report security issues privately — do NOT open a public issue (see SECURITY.md).
+  - name: Tegro app & support
+    url: https://tegro.finance/staking
+    about: Use the app or reach the team on Telegram for product questions.
